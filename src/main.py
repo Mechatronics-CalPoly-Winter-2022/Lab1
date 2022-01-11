@@ -61,8 +61,14 @@ def pin_setup(pin_num, mode, timer=None, channel=None):
 
 
 def main():
-    ena = pin_setup(pyb.Pin.board.PA10, pyb.Pin.IN)
+    ena = pin_setup(pyb.Pin.board.PA10, pyb.Pin.OUT_PP)
+    ena.high()
 
+    in1a = pin_setup(pyb.Pin.board.PB4, pyb.Pin.Out_PP)
+    in1a.low()
+
+    in2a = pin_setup(pyb.Pin.board.PB5, pyb.Pin.Out_PP, timer=3, channel=2)
+    in2a.pulse_width_percent(50)
 
 
 if __name__ == '__main__':
