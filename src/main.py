@@ -47,12 +47,13 @@ def main():
     ena.high()
 
     in1a = pyb.Pin(pyb.Pin.board.PB4, pyb.Pin.OUT_PP)
-    in1a.low()
+    tim3 = pyb.Timer(3, freq=20000)
+    ch1 = tim3.channel(1, pyb.Timer.PWM, pin=in1a)
+    ch1.pulse_width_percent(0)
 
     in2a = pyb.Pin(pyb.Pin.board.PB5, pyb.Pin.OUT_PP)
-    tim3 = pyb.Timer(3, freq=20000)
     ch2 = tim3.channel(2, pyb.Timer.PWM, pin=in2a)
-    ch2.pulse_width_percent(50)
+    ch2.pulse_width_percent(0)
 
 
 if __name__ == '__main__':
