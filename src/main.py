@@ -86,9 +86,50 @@ class MotorDriver:
 #PB6 T4CH1
 #PB7 T4CH2
 
+class EncoderDriver:
+    '''!
+    This class implements an encoder driver for an ME405 kit.
+    '''
+
+    _pin1: 'pyb.Pin'
+    _pin2: 'pyb.Pin'
+    _tim: 'pyb.Timer'
+    _ch1: 'pyb.Timer.channel'
+    _ch2: 'pyb.Timer.channel'
+
+    def __init__(self, enc_1: str, enc_2: str, timer: 'pyb.Timer') -> None:
+        '''!
+        Creates an encoder driver by initializing GPIO pins
+        @param enc_1 The pin to which the first encoder signal
+        @param enc_2 The pin to which the second encoder signal
+        @param timer The timer to use for the encoder
+        '''
+        self._pin1 = pyb.Pin(enc_1, pyb.Pin.AF_PP)
+        self._pin2 = pyb.Pin(enc_2, pyb.Pin.AF_PP)
+        self._tim = timer
+        self._tim.prescaler(1)
+        self._tim.period(100000)
+
+        self._ch1 = self._tim.channel(1, pyb.Timer.ENC_A, pin=self._pin1)
+        self._ch2 = self._tim.channel(2, pyb.Timer.ENC_B, pin=self._pin2)
+
+    def get_count(self) -> int:
+        '''!
+        This method returns the current count of the encoder.
+        @return The current count of the encoder
+        '''
+        return self._tim.counter()
+
+
 def main():
     moe = MotorDriver('PA10', 'PB4', 'PB5', pyb.Timer(3))
+    enc = EncoderDriver('PB6', 'PB7', pyb.Timer(8))
     moe.set_duty_cycle(-42)
+
+    while True:
+        time.sleep(0.05)
+        print("Encoder 1: ", enc.get_count())
+
 
 if __name__ == '__main__':
     print("Hello World!")
