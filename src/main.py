@@ -1,9 +1,14 @@
-"""! @brief
-[file description]
+"""! 
+@brief This file offers classes for both controlling motors
+and reading values from encoders.
 """
 
 ## 
 # @mainpage
+# @section description_main Lab 1
+# This is the documentation page for Lab 0, a program that
+# offers a driver for running motors and reading encoders.
+#
 # @author Kyle Jennings, Zarek Lazowski, William Dorosk
 # @date January 11th, 2022
 
@@ -47,14 +52,14 @@ class MotorDriver:
 
     def enable_motor(self):
         '''!
-        This method enables the motor.
+        @brief This method enables the motor.
         '''
         print('Enabling motor...')
         self._ena.high()
 
     def disable_motor(self):
         '''!
-        This method disables the motor.
+        @brief This method disables the motor.
         '''
         print('Disabling motor...')
         self._ena.low()
